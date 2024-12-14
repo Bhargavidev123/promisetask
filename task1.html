@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       
+const resolvePromise = () => {
+  return new Promise((resolve) => {
+    resolve("Promise resolved successfully!");
+  });
+};
+
+
+const rejectPromise = () => {
+  return new Promise((_, reject) => {
+    reject(new Error("Something went wrong!"));
+  });
+};
+
+
+const chainPromises = () => {
+  return new Promise((resolve) => {
+    resolve("First promise resolved");
+  })
+    .then((value) => {
+      console.log(value);
+      return "Second promise resolved";
+    })
+    .then((value) => {
+      console.log(value);
+      return "Third promise resolved";
+    })
+    .then((finalValue) => {
+      console.log(finalValue);
+    });
+};
+
+const handleRejection = () => {
+  return new Promise((_, reject) => {
+    reject(new Error("An error occurred"));
+  });
+};
+
+
+const executeTasks = async () => {
+  try {
+   
+    const resolvedValue = await resolvePromise();
+    console.log(resolvedValue);
+
+   
+    try {
+      await rejectPromise();
+    } catch (error) {
+      console.error(error.message);
+    }
+
+   
+    await chainPromises();
+
+    
+    try {
+      await handleRejection();
+    } catch (error) {
+      console.error("Caught an error:", error.message);
+    } finally {
+      console.log("Promise handling completed.");
+    }
+  } catch (err) {
+    console.error("Unexpected error:", err.message);
+  }
+};
+
+
+executeTasks();
+
+
+
+
+  
+
+  
+    </script>
+</body>
+</html>
